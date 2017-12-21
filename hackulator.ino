@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * *
     Functions to implement
-    calculate(): take input from outtext buffer then put answer in outtext buffer | anirudh do this
+    calculate(): take input from outtext buffer then print answer using tft.print or tft.println | anirudh do this
  *                         *
     
  *                         *
@@ -140,7 +140,6 @@ const char *calcloop() {
         else {
           tft.println("");
           calculate();
-          tft.println(outtext);
         }
       }
       if (key <= 57 && key >= 48) {
