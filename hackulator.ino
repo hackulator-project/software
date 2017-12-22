@@ -6,7 +6,7 @@
  *                         *
  * * * * * * * * * * * * * *
 */
-
+//we could use tinyexpr or your library sree but yours will probly be easier to use cuz we would know how to use it
 #include <Key.h> //keypad
 #include <Keypad.h>
 #include <SPI.h> //sd card and display
