@@ -55,6 +55,11 @@ void noteviewer() {
     }
   }
 }
+void calculator() {
+    if(!strcmp(outtext, "9+10")) {
+    tft.println("21")
+  }
+}
 void musicplayer() {
   /*clrscr();
   if (!SD.begin(4)) {
