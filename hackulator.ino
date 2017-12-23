@@ -131,9 +131,9 @@ void calculate() {
     tft.println("21");
   }
   if(!strcmp(outtext, "2+2-1")) {
-    tft.println(" THATS 3, QUIK MAFS"); //we still need to figure out how to use something and put in a buffer this for now tho
+    tft.println(" THATS 3, QUIK MAFS");//easter egg check
   } else {
-    tft.println(evaluate(outtext));
+    tft.println(evaluate(outtext)); 
   }
 }
 void musicplayer() {
