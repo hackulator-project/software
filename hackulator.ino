@@ -146,7 +146,7 @@ void calculate() {
       tft.println("ARDUINO CORRUPTED") //Scares the shit out of the people who access this secret menu
       delay(3000) 
       tft.println("xF YOU THOUGHT THE ARDUINO GOT CORRUPT")
-      calculate;
+      calculate();
     }
   } 
   
