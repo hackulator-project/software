@@ -1,12 +1,12 @@
 /* * * * * * * * * * * * * *
     Functions to implement
-    calculate(): take input from outtext buffer then put answer in outtext buffer | anirudh do this
+    calculate(): take input from outtext buffer then print answer using tft.print or tft.println | anirudh do this
  *                         *
     
  *                         *
  * * * * * * * * * * * * * *
 */
-
+//we could use tinyexpr or your library sree but yours will probly be easier to use cuz we would know how to use it
 #include <Key.h> //keypad
 #include <Keypad.h>
 #include <SPI.h> //sd card and display
@@ -30,6 +30,7 @@ char keys[ROWS][COLS] = {
 byte rowPins[ROWS] = {5, 6, 12, 13};
 byte colPins[COLS] = {A1, A2, A3, A4};
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+
 //START
 char peek()
 {
@@ -126,10 +127,14 @@ void noteviewer() {
   }
 }
 void calculate() {
-  //Anirudh: Please implement!
-  //to get the answer, do evaluate(outtext)
-  //also, check for easter eggs.
-  //use tft.println to print
+    if(!strcmp(outtext, "9+10")) {
+    tft.println("21");
+  }
+  if(!strcmp(outtext, "2+2-1")) {
+    tft.println(" THATS 3, QUIK MAFS"); //we still need to figure out how to use something and put in a buffer this for now tho
+  } else {
+    tft.println(evaluate(outtext));
+  }
 }
 void musicplayer() {
   /*clrscr();
@@ -216,7 +221,6 @@ const char *calcloop() {
         else {
           tft.println("");
           calculate();
-          tft.println(outtext);
         }
       }
       if (key <= 57 && key >= 48) {
