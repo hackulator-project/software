@@ -1,12 +1,12 @@
 /* * * * * * * * * * * * * *
     Functions to implement
-    calculate(): take input from outtext buffer then print answer using tft.print or tft.println | anirudh do this
+    calculate(): take input from outtext buffer then put answer in outtext buffer | anirudh do this
  *                         *
     
  *                         *
  * * * * * * * * * * * * * *
 */
-//we could use tinyexpr or your library sree but yours will probly be easier to use cuz we would know how to use it
+
 #include <Key.h> //keypad
 #include <Keypad.h>
 #include <SPI.h> //sd card and display
@@ -30,6 +30,76 @@ char keys[ROWS][COLS] = {
 byte rowPins[ROWS] = {5, 6, 12, 13};
 byte colPins[COLS] = {A1, A2, A3, A4};
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+//START
+char peek()
+{
+  return *outtext;
+}
+
+char get()
+{
+  return *outtext++;
+}
+
+double expression();
+
+double number()
+{
+  double result = get() - '0';
+  while (peek() >= '0' && peek() <= '9')
+  {
+    result = 10*result + get() - '0';
+  }
+  return result;
+}
+
+double factor()
+{
+  if (peek() >= '0' && peek() <= '9')
+    return number();
+  else if (peek() == '(')
+  {
+    get(); // '('
+    double result = expression();
+    get(); // ')'
+    return result;
+  }
+  else if (peek() == '-')
+  {
+    get();
+    return -factor();
+  }
+  return 0; // error
+}
+
+double term()
+{
+  double result = factor();
+  while (peek() == '*' || peek() == '/' || peek() == 'a')
+    if (get() == '*')
+      result *= factor();
+    else
+      result /= factor();
+  return result;
+}
+
+double expression()
+{
+  double result = term();
+  while (peek() == '+' || peek() == '-')
+    if (get() == '+')
+      result += term();
+    else
+      result -= term();
+  return result;
+}
+double evaluate(const char *expr) {
+  outtext = (char*)expr;
+  double result = expression();
+  return result;
+}
+//END
+
 
 void clrscr() { //clear screen
   tft.fillScreen(0x0000);
@@ -55,13 +125,11 @@ void noteviewer() {
     }
   }
 }
-void calculator() {
-    if(!strcmp(outtext, "9+10")) {
-    tft.println("21")
-  }
-  if(!strcmp(outtext, "2+2-1")) {
-    tft.println(" THATS 3, QUIK MAFS") //we still need to figure out how to use something and put in a buffer this for now tho
-  }
+void calculate() {
+  //Anirudh: Please implement!
+  //to get the answer, do evaluate(outtext)
+  //also, check for easter eggs.
+  //use tft.println to print
 }
 void musicplayer() {
   /*clrscr();
@@ -148,6 +216,7 @@ const char *calcloop() {
         else {
           tft.println("");
           calculate();
+          tft.println(outtext);
         }
       }
       if (key <= 57 && key >= 48) {
