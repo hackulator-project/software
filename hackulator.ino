@@ -1,20 +1,11 @@
-/* * * * * * * * * * * * * *
-    Functions to implement
-    calculate(): take input from outtext buffer then print answer using tft.print or tft.println
- *                         *
-    
- *                         *
- * * * * * * * * * * * * * *
-*/
-
-#include <Key.h> //dont change
+#include <Key.h> //keypad
 #include <Keypad.h>
 #include <SPI.h> //sd card and display
 #include <Adafruit_ILI9341.h> //display
 #include <Adafruit_GFX.h>
 #include <SD.h> //sdcard
 #include <math.h>
-
+#include <quickmafs.h>
 #define TFT_DC 9  //connect display spi DC and CS to this
 #define TFT_CS 10
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC); //define the display
@@ -31,80 +22,6 @@ char keys[ROWS][COLS] = {
 byte rowPins[ROWS] = {5, 6, 12, 13};
 byte colPins[COLS] = {A1, A2, A3, A4};
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
-
-//START
-char peek() {
-  return *outtext;
-}
-
-char get() {
-  return *outtext++;
-}
-
-double expression();
-
-double number() {
-  double result = get() - '0';
-  while (peek() >= '0' && peek() <= '9') {
-    result = 10*result + get() - '0';
-  }
-  return result;
-}
-
-double factor() { //P
-  if (peek() >= '0' && peek() <= '9') {
-    return number();
-  }
-  else if (peek() == '(') {
-    get(); // '('
-    double result = expression();
-    get(); // ')'
-    return result;
-  }
-  else if (peek() == '-') {
-    get();
-    return -factor();
-  }
-  return 0; // error
-}
-double exponent() { //E
-  double result = factor();
-  while(peek() == '^' || peek() == 'r') {
-    if(get() == '^')
-      result = pow(result, factor());
-    if(get() == 'r')
-      result = pow(factor(), 1/result); // 3r27 becomes 27 to the power of 1/3
-
-  }
-}
-double term() //MD
-{
-  double result = exponent();
-  while (peek() == '*' || peek() == '/' || peek() == 'a')
-    if (get() == '*')
-      result *= exponent();
-    else
-      result /= exponent();
-  return result;
-}
-
-double expression() //AS
-{
-  double result = term();
-  while (peek() == '+' || peek() == '-')
-    if (get() == '+')
-      result += term();
-    else
-      result -= term();
-  return result;
-}
-double evaluate(const char *expr) {
-  outtext = (char*)expr;
-  double result = expression();
-  return result;
-}
-//END
-
 
 void clrscr() { //clear screen
   tft.fillScreen(0x0000);
@@ -134,22 +51,6 @@ void calculate() {
     if(!strcmp(outtext, "9+10")) {
     tft.println("21");
   }
-  
-  if(!strcmp(outtext, "1738")) {
-    char key = keypad.getKey();
-    tft.println("YOU ARE IN THE VICINITY OF THE MOST EVIL CULT. GET OUT ON THE COUNT OF THREE OR ELSE...")
-    tft.println("PRESS 0 TO EXIT")
-    tft.println("ALSO PRESS ANYTHING ELSE TO GET A COOL SURPRISE")
-    if (key == '0') {
-      calculate();
-    } else {
-      tft.println("ARDUINO CORRUPTED") 
-      delay(3000) 
-      tft.println("xF YOU THOUGHT THE ARDUINO GOT CORRUPT")
-      calculate();
-    }
-  } 
-  
   if(!strcmp(outtext, "2+2-1")) {
     tft.println(" THATS 3, QUIK MAFS"); //easter egg check
   } else {
