@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * *
     Functions to implement
-    calculate(): take input from outtext buffer then print answer using tft.print or tft.println | anirudh do this
+    calculate(): take input from outtext buffer then print answer using tft.print or tft.println
  *                         *
     
  *                         *
