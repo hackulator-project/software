@@ -6,7 +6,7 @@
  *                         *
  * * * * * * * * * * * * * *
 */
-//we could use tinyexpr or your library sree but yours will probly be easier to use cuz we would know how to use it
+
 #include <Key.h> //keypad
 #include <Keypad.h>
 #include <SPI.h> //sd card and display
@@ -131,7 +131,7 @@ void calculate() {
     tft.println("21");
   }
   if(!strcmp(outtext, "2+2-1")) {
-    tft.println(" THATS 3, QUIK MAFS");//easter egg check
+    tft.println(" THATS 3, QUIK MAFS"); //easter egg check
   } else {
     tft.println(evaluate(outtext)); 
   }
