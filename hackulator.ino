@@ -134,6 +134,22 @@ void calculate() {
     if(!strcmp(outtext, "9+10")) {
     tft.println("21");
   }
+  
+  if(!strcmp(outtext, "1738")) {
+    char key = keypad.getKey();
+    tft.println("YOU ARE IN THE VICINITY OF THE MOST EVIL CULT. GET OUT ON THE COUNT OF THREE OR ELSE...")
+    tft.println("PRESS 0 TO EXIT")
+    tft.println("ALSO PRESS ANYTHING ELSE TO GET A COOL SURPRISE")
+    if (key == '0') {
+      calculate();
+    } else {
+      tft.println("ARDUINO CORRUPTED") //Scares the shit out of the people who access this secret menu
+      delay(3000) 
+      tft.println("xF YOU THOUGHT THE ARDUINO GOT CORRUPT")
+      calculate;
+    }
+  } 
+  
   if(!strcmp(outtext, "2+2-1")) {
     tft.println(" THATS 3, QUIK MAFS"); //easter egg check
   } else {
