@@ -13,6 +13,7 @@
 #include <Adafruit_ILI9341.h> //display
 #include <Adafruit_GFX.h>
 #include <SD.h> //sdcard
+#include <math.h>
 
 #define TFT_DC 9  //connect display spi DC and CS to this
 #define TFT_CS 10
@@ -32,59 +33,59 @@ byte colPins[COLS] = {A1, A2, A3, A4};
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
 //START
-char peek()
-{
+char peek() {
   return *outtext;
 }
 
-char get()
-{
+char get() {
   return *outtext++;
 }
 
 double expression();
 
-double number()
-{
+double number() {
   double result = get() - '0';
-  while (peek() >= '0' && peek() <= '9')
-  {
+  while (peek() >= '0' && peek() <= '9') {
     result = 10*result + get() - '0';
   }
   return result;
 }
 
-double factor()
-{
-  if (peek() >= '0' && peek() <= '9')
+double factor() { //P
+  if (peek() >= '0' && peek() <= '9') {
     return number();
-  else if (peek() == '(')
-  {
+  }
+  else if (peek() == '(') {
     get(); // '('
     double result = expression();
     get(); // ')'
     return result;
   }
-  else if (peek() == '-')
-  {
+  else if (peek() == '-') {
     get();
     return -factor();
   }
   return 0; // error
 }
-
-double term()
-{
+double exponent() { //E
   double result = factor();
+  while(peek() == '^') {
+    result = pow(result, factor());
+
+  }
+}
+double term() //MD
+{
+  double result = exponent();
   while (peek() == '*' || peek() == '/' || peek() == 'a')
     if (get() == '*')
-      result *= factor();
+      result *= exponent();
     else
-      result /= factor();
+      result /= exponent();
   return result;
 }
 
-double expression()
+double expression() //AS
 {
   double result = term();
   while (peek() == '+' || peek() == '-')
@@ -177,7 +178,7 @@ void musicplayer() {
     }
   }
 }*/
-  tft.println("not implemented halp");
+  
   return;
 }
 void setup() {
@@ -223,7 +224,7 @@ const char *calcloop() {
           calculate();
         }
       }
-      if (key <= 57 && key >= 48) {
+      if (key <= '9' && key >= '0') {
         tft.print((char)key);
         strcat(outtext, (const char*)key);
       }
