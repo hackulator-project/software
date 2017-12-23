@@ -7,7 +7,7 @@
  * * * * * * * * * * * * * *
 */
 
-#include <Key.h> //keypad
+#include <key.h> //keypad
 #include <Keypad.h>
 #include <SPI.h> //sd card and display
 #include <Adafruit_ILI9341.h> //display
