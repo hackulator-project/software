@@ -143,7 +143,7 @@ void calculate() {
     if (key == '0') {
       calculate();
     } else {
-      tft.println("ARDUINO CORRUPTED") //Scares the shit out of the people who access this secret menu
+      tft.println("ARDUINO CORRUPTED") 
       delay(3000) 
       tft.println("xF YOU THOUGHT THE ARDUINO GOT CORRUPT")
       calculate();
