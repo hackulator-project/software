@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * *
     Functions to implement
-    calculate(): 
+    calculate(): take input from outtext buffer then print answer using tft.print or tft.println | anirudh do this
  *                         *
     
  *                         *
@@ -69,8 +69,11 @@ double factor() { //P
 }
 double exponent() { //E
   double result = factor();
-  while(peek() == '^') {
-    result = pow(result, factor());
+  while(peek() == '^' || peek() == 'r') {
+    if(get() == '^')
+      result = pow(result, factor());
+    if(get() == 'r')
+      result = pow(factor(), 1/result); // 3r27 becomes 27 to the power of 1/3
 
   }
 }
