@@ -7,3 +7,11 @@ First, follow instructions [here](https://learn.adafruit.com/adafruit-feather-m0
 # Usage  
 Use the hackulator like a normal calculator. Or, type "420666" then enter to access the secret menu. Of course, you could change this secret code by modifying the source code. In this menu, you can listen to music or view notes.  
   
+# Dependencies
+This project uses:  
+* **SD**  
+* **[Keypad](https://playground.arduino.cc/Code/Keypad)**  
+* **SPI**  
+* **Adafruit_ILI9341**  
+* **Adafruit_GFX**  
+* **[quickmafs](https://github.com/hackulator-project/quickmafs)**
