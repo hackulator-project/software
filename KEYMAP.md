@@ -6,4 +6,4 @@
 |7 <sub>log</sub>|8 <sub>ln</sub>|9 <sub>π</sub>|× <sub>^</sub>|
 |<sub>shift</sub>|0 <sub>e</sub>|⌫ <sup>⏎</sup>|/|  
 * subscript is accessed with shift
-* superscript is accessed by long press
+* superscript is accessed by long pres
